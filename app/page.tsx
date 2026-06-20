@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react"
 import { ChevronDown } from "lucide-react"
-import { StatusBar } from "@/components/status-bar"
 import { ChatHeader } from "@/components/chat-header"
 import { MessageBubble } from "@/components/message-bubble"
 import { ChatInput } from "@/components/chat-input"
@@ -63,7 +62,6 @@ export default function ChatPage() {
   return (
     <main className="flex min-h-dvh w-full items-center justify-center bg-black">
       <div className="relative flex h-dvh w-full max-w-md flex-col overflow-hidden bg-[#0b141a] sm:h-[900px] sm:rounded-[2.5rem] sm:border sm:border-white/10 sm:shadow-2xl">
-        <StatusBar />
         <ChatHeader />
 
         {/* Mensajes */}
