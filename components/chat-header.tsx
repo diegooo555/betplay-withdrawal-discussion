@@ -16,7 +16,7 @@ export function ChatHeader() {
 
       <button type="button" aria-label="Ver perfil de Yeimy" className="flex min-w-0 flex-1 items-center gap-3">
         <img
-          src="/yeimy-profile.png"
+          src="/peli.jpeg"
           alt="Foto de perfil de Yeimy"
           className="h-10 w-10 rounded-full object-cover"
         />
