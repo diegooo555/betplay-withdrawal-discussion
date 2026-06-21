@@ -1,11 +1,15 @@
 "use client"
 
+import React from "react"
+
 import { useEffect, useRef, useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { ChatHeader } from "@/components/chat-header"
 import { MessageBubble } from "@/components/message-bubble"
+import { DateSeparator } from "@/components/date-separator"
 import { ChatInput } from "@/components/chat-input"
 import { initialMessages, type Message } from "@/lib/messages"
+import { getDateLabel } from "@/lib/utils"
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
@@ -37,12 +41,18 @@ export default function ChatPage() {
     return `${h}:${m} ${period}`
   }
 
+  function getTodayISO() {
+    const d = new Date()
+    return d.toISOString().slice(0, 10)
+  }
+
   function handleSend(text: string) {
     const newMessage: Message = {
       id: crypto.randomUUID(),
       text,
       sender: "me",
       time: getTime(),
+      date: getTodayISO(),
       status: "sent",
     }
     setMessages((prev) => [...prev, newMessage])
@@ -77,9 +87,21 @@ export default function ChatPage() {
           }}
         >
           <div className="flex flex-col gap-2 px-3 py-3">
-            {messages.map((message) => (
-              <MessageBubble key={message.id} message={message} />
-            ))}
+            {messages.map((message, index) => {
+              const prevMessage = messages[index - 1]
+              const showDateSeparator =
+                index === 0 || prevMessage?.date !== message.date
+              return (
+                <React.Fragment key={message.id}>
+                  {showDateSeparator && (
+                    <DateSeparator
+                      label={getDateLabel(message.date)}
+                    />
+                  )}
+                  <MessageBubble message={message} />
+                </React.Fragment>
+              )
+            })}
             <div ref={bottomRef} />
           </div>
         </div>
